@@ -49,6 +49,11 @@ export default {
 </script>
 
 <style scoped>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
     .candidates{
         background-color: #FFFFFF;
         width: 380px;
@@ -72,21 +77,23 @@ export default {
         display: flex;
         flex-direction: column-reverse;
         height: 600px;
-        overflow: auto;
     }
+    
     .candidate-card{
         background-color: #FFFFFF;
         border-radius: 15px;
         width: 320px;
         margin: 15px;
         padding: 20px;
+        height: 150px;
     }
     .candidate-pic{
         height: 60px;
         float: left;
     }
     .candidate-name{
-        font-size: 1.4em;
+        font-size: 1.3em;
+        margin-bottom: 10px;
     }
     .candidate-info{
         margin-left: 65px;
@@ -94,7 +101,7 @@ export default {
         
     }
     .candidate-info2{
-        margin-top: 40px;
+        margin-top: 30px;
         display: flex;
         flex-direction: row;
         color: #444444;

@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <NavBar />
+  <div class="body">
     <CoverPic />
     <AboutDiv />
     <div class="last">
@@ -29,15 +28,13 @@ export default {
 };
 </script>
 
-<style>
-#app {
+<style scoped>
+
+.body{
+  background-color: #ccc;
+  color: #2c3e50;
   font-family: Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #222222;
-  margin-top: 60px;
-  background-color: #bbbbbb;
 }
 .last{
   margin-top: 100px;

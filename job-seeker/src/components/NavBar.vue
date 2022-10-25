@@ -30,6 +30,8 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 0 130px;
+
+  font-family: Helvetica, Arial, sans-serif;
 }
 .brand {
   height: 60px;

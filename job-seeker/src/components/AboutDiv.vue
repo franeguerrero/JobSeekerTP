@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
     .about{
         display: flex;
@@ -31,6 +31,7 @@ export default {
         margin: auto;
         margin-top: 100px
     }
+    
     .text-card{
         background-color: #FFFFFF;
         border-radius: 15px;

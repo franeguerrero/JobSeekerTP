@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="body">
         <img class="cover" src="../assets/cover.jpg" alt="Cover photo">
 
     </div>
@@ -11,7 +11,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    .body{
+        display: flex;
+        justify-content: center;
+    }
     .cover{
         
         margin-top: 100px;
