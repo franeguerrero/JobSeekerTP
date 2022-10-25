@@ -61,6 +61,12 @@ export default {
 </script>
 
 <style scoped>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
     .jobs{
         background-color: #FFFFFF;
         width: 380px;
@@ -99,7 +105,8 @@ export default {
         float: left;
     }
     .job-name{
-        font-size: 1.4em;
+        font-size: 1.3em;
+        margin-bottom: 10px;
     }
     .job-info{
         margin-left: 65px;
@@ -107,6 +114,7 @@ export default {
         
     }
     .job-info2{
+        margin-top: 30px;
         display: flex;
         flex-direction: row;
         color: #444444;
