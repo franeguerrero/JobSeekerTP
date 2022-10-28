@@ -16,7 +16,7 @@
           <div class="profile-card">
             <div class="image">
               <img
-                src="https://www.mendozapost.com/files/image/7/7142/54b6f4c45797b_360_480!.jpg?s=bf284228883a747d8dc7886e606a181f&d=1638231922"
+                v-bind:src="candidato.avatar"
                 alt=""
                 class="profile-img"
               />
@@ -28,20 +28,17 @@
               </p>
               <p class="edad">Edad: {{ candidato.edad }}</p>
               <div class="container-skills">
-                <div
-                  class="lista-habilidades"
-                >
+                <div class="lista-habilidades">
                   <p class="tituloS">Skills</p>
                   <ul>
                     <li v-for="skill in candidato.skill" v-bind:key="skill">
-                      
-                        
-                        <p><img
+                      <p>
+                        <img
                           class="estrella"
                           src="@/assets/estrella.png"
                           alt=""
-                        />{{ skill }} <br></p>
-                      
+                        />{{ skill }} <br />
+                      </p>
                     </li>
                   </ul>
                 </div>
@@ -73,67 +70,14 @@
 </template>
 
 <script>
+
 export default {
   name: "UltimosCandidatos",
   data: () => {
     return {
       event: "click",
-      candidatos: [
-        {
-          nombre: "Enzo",
-          apellido: "Sives",
-          edad: "26",
-
-          movilidad: false,
-          fulltime: true,
-          skill: ["Trabajo en equipo"]
-        },
-        {
-          nombre: "Francisco",
-          apellido: "Guerrero",
-          edad: "26",
-
-          movilidad: true,
-          fulltime: false,
-          skill: ["Adaptación o flexibilidad", "Romper código (prog)"]
-        },
-
-        {
-          nombre: "Enzo",
-          apellido: "Guerrero",
-          edad: "26",
-
-          movilidad: false,
-          fulltime: false,
-          skill: ["Identificación de oportunidades y resolución de problemas","Cebar mates"]
-        },
-        {
-          nombre: "Enzo",
-          apellido: "Milei",
-          edad: "26",
-
-          movilidad: false,
-          fulltime: false,
-          skill: ["Desarrollo de ideas y capacidad para innovar", "Dolarizar el planeta", "Volar Banco Central","Desarrollo de ideas y capacidad para innovar", "Dolarizar el planeta", "Volar Banco Central","Desarrollo de ideas y capacidad para innovar", "Dolarizar el planeta", "Volar Banco Central","Desarrollo de ideas y capacidad para innovar", "Dolarizar el planeta", "Volar Banco Central"]
-        },
-        {
-          nombre: "Enza",
-          apellido: "Capelli",
-          edad: "26",
-          movilidad: false,
-          fulltime: false,
-          skill: ["Capacidad de comunicación", "Doctora sin título" ]
-        },
-        {
-          nombre: "Enzo",
-          apellido: "Hoffer",
-          edad: "26",
-          movilidad: false,
-          fulltime: false,
-          skill: ["Carecer de capacidad de comunicación", "Poner corcheas" ]
-        }
-      ],
       paginate: ["candidatos"],
+      candidatos: {},
       methods: {
         abrirModal() {
           const { classList } = document.body;
@@ -149,6 +93,12 @@ export default {
       },
     };
   },
+  mounted(){
+    fetch("https://635b06b3aa7c3f113db4c169.mockapi.io/candidatos")
+      .then((response) => response.json())
+      .then((response) => (this.candidatos = response))
+      .catch((err) => console.error(err));        
+  }
 };
 </script>
 
@@ -251,7 +201,7 @@ body.closed .modal {
   translate: -50% -50%;
 }
 .container-skills {
-  overflow: auto;
+  overflow: hidden;
   margin-top: 20px;
   height: 220px;
   width: 220px;
@@ -276,11 +226,11 @@ body.closed .modal {
 .estrella {
   height: 10px;
   width: 10px;
-  margin-right: 5px ;
+  margin-right: 5px;
 }
 .tituloS {
   font-weight: bold;
-  margin: 10px
+  margin: 10px;
 }
 
 .lista-habilidades ul {
