@@ -12,8 +12,7 @@ export default {
   background-color: #2b96ba;
   color: white;
   border: none;
-  width: 100px !important;
-  height: 30px !important;
+ padding:10px 20px;
   border-radius: 10px;
   align-self: center;
   margin: auto;

@@ -49,7 +49,7 @@ export default {
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   padding: 1.5rem;
-  margin: 1.5rem;
+  margin: 1.5rem 1.5rem 1.5rem 2rem;
 }
 .rubro {
   text-align: center;
