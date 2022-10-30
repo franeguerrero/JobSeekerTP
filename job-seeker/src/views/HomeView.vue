@@ -1,30 +1,47 @@
 <template>
-  <div class="body">
+  <div class="body" @click="closeModal">
     <CoverPic />
     <AboutDiv />
     <div class="last">
       <LastJobs />
-      <LastCandidates />
+      <LastCandidates :modalDataCharge="modalDataCharge"/>
     </div>
+    <CardExpanded :modalData="modalData" :isActive="isActive"/>
   </div>
 </template>
 
 <script>
-// import NavBar from "../components/NavBar.vue";
+
 import CoverPic from "../components/CoverPic.vue";
 import AboutDiv from '../components/AboutDiv.vue';
 import LastCandidates from '../components/LastCandidates.vue';
 import LastJobs from '../components/LastJobs.vue'
+import CardExpanded from "../components/modal/CardExpanded.vue"
 
 export default {
   name: "HomeView",
   components: {
-    // NavBar,
     CoverPic,
     AboutDiv,
     LastCandidates,
-    LastJobs
+    LastJobs,
+    CardExpanded
   },
+  data:()=>{
+    return {
+     modalData: {},
+     isActive: false
+    }
+  },
+  methods: {
+    modalDataCharge(userData){
+      this.modalData = userData
+      this.isActive = true
+    },
+    closeModal(){
+      this.isActive = false
+    }
+  }
 };
 </script>
 
