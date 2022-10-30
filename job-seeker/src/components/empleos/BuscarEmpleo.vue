@@ -10,23 +10,29 @@
 <script>
 export default {
   name: "BuscarEmpleo",
-  props: {
-    filterResults: Function,
-  },
+  props: {},
   data() {
     return {
       value: "",
     };
+  },
+  methods: {
+    filterResults(value) {
+      var value1 = value;
+      console.log(value1);
+      this.$emit("soyKey", value);
+    },
   },
 };
 </script>
 <style scoped>
 input {
   width: 300px;
-  height: 30px;
+  padding:10px;
   margin-top: 1.5rem;
-  border-radius: 10px;
+  border-radius: 50px;
   border: none;
+
   text-align: center;
   align-self: center;
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);

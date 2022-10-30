@@ -22,8 +22,8 @@ export default {
   name: "SingleEmpleo",
   props: ["empleo"],
   methods: {
-    clickOnCard(id) {
-      this.$emit("laKey", id);
+    clickOnCard(array,id) {
+      this.$emit("laKey", array,id);
     },
   },
 };
@@ -66,14 +66,14 @@ img {
 .empleo {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  width: 30vw;
+  width: 36vw;
   height: 15 vh;
   background-color: #fff;
   background: linear-gradient(#f8f8f8, #fff);
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   padding: 1rem;
-  margin: 1.5rem;
+  margin: 1.5rem  ;
   cursor: pointer;
   display: flex;
   flex-direction: column;

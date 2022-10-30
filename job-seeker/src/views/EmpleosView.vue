@@ -18,6 +18,6 @@ export default {
 *{
   height: calc(100vh - 70px);
   margin-top: 70px;
-  background-color: #ccc;
+  background-color: #efefef;
 }
 </style>
