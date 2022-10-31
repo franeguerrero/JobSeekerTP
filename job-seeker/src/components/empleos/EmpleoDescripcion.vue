@@ -7,27 +7,41 @@
         <p class="somos">{{ empleo.somos }}</p>
       </div>
     </div>
-    <div class="descripcion">
+    <div v-if="mostrarForm">
+      <AplicarForm :cerrarForm="cerrarForm" />
+    </div>
+    <div v-else class="descripcion">
       <h2 class="desc">{{ descripcionTitulo }}</h2>
       <p class="desc">{{ empleo.descripcion }}</p>
       <h2 class="requisitos">{{ requisitosTitulo }}</h2>
       <p class="requisitos">{{ empleo.requisitos }}</p>
+      <BotonAplicar @form="abrirForm" />
     </div>
-    <BotonAplicar />
   </div>
 </template>
 
 <script>
+import AplicarForm from "./AplicarForm.vue";
 import BotonAplicar from "./BotonAplicar.vue";
 export default {
   name: "EmpleoDescripcion",
-  components: { BotonAplicar },
+  components: { BotonAplicar, AplicarForm },
   props: ["empleo"],
   data() {
     return {
       descripcionTitulo: "Descripción:",
       requisitosTitulo: "Requisitos:",
+      mostrarForm: false,
+      enviada1: false,
     };
+  },
+  methods: {
+    abrirForm() {
+      this.mostrarForm = !this.mostrarForm;
+    },
+    cerrarForm() {
+      this.mostrarForm = false;
+    },
   },
 };
 </script>
@@ -61,7 +75,6 @@ export default {
   text-align: center;
   margin-top: 0px;
   padding-top: 0px;
-
   color: grey;
 }
 .tittle {
@@ -75,7 +88,6 @@ export default {
   font-size: calc(10px + 0.390625vw);
   margin-top: 10px;
 }
-
 img {
   width: 100px;
   height: 100px;

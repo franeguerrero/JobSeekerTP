@@ -1,14 +1,13 @@
 <template>
   <div v-if="loading" class="loading"></div>
   <section v-else class="empleos">
-    <h2 class="titulo">{{titulo}}</h2>
+    <h2 class="titulo">{{ titulo }}</h2>
     <BuscarEmpleo @soyKey="filterResults1" />
     <div class="botonesFiltrar">
-      <BotonFiltrar @laKey=" buscarPorJornada" />
+      <BotonFiltrar @laKey="buscarPorJornada" />
     </div>
     <p v-show="noSeEncuentra" class="noSeEncuentra">{{ noResultado }}</p>
     <div class="buscador">
-  
       <div class="allEmpleos" v-show="aparece">
         <SingleEmpleo
           v-for="empleo in filterJornada"
@@ -42,13 +41,12 @@ export default {
   components: { SingleEmpleo, BuscarEmpleo, EmpleoDescripcion, BotonFiltrar },
   data() {
     return {
-      loading:true,
+      loading: true,
       empleos: [],
       isActive: false,
       mostrar: false,
       filter: [],
       filterJornada: [],
-
       aparece: true,
       noSeEncuentra: false,
       noResultado: "No se encontraron resultados",
@@ -57,12 +55,11 @@ export default {
       value1: "",
     };
   },
-
   mounted() {
     fetch("https://6341b5f720f1f9d79978868e.mockapi.io/empleo")
       .then((response) => response.json())
       .then((jobs) => {
-        this.loading=false;
+        this.loading = false;
         jobs.sort((a, b) => {
           return b.id - a.id;
         });
@@ -72,7 +69,8 @@ export default {
         this.filterJornada[0].isActive = true;
         this.filterJornada[0].mostrar = true;
         this.tipoDeJornada = "todos";
-      });
+      })
+      .catch((err) => console.error(err));
   },
   methods: {
     MostrarEmpleo(indexComparacion) {
@@ -87,7 +85,6 @@ export default {
         }
       });
     },
-
     buscarTodo() {
       if (this.tipoDeJornada == "fulltime") {
         this.filterJornada = this.empleos.filter(
@@ -117,7 +114,6 @@ export default {
         this.noSeEncuentra = false;
       }
     },
-
     buscarPorJornada(event) {
       this.tipoDeJornada = event.target.value;
       this.buscarTodo();
@@ -131,36 +127,33 @@ export default {
 </script>
 
 <style scoped>
-
-.loading{
-  
- margin:200px auto auto auto ;
-  border: 10px solid #EAF0F6;
+.loading {
+  margin: 300px auto auto auto;
+  border: 5px solid #eaf0f6;
   border-radius: 50%;
-  border-top: 10px solid #2b96ba;
+  border-top: 5px solid #2b96ba;
   width: 70px;
   height: 70px;
   animation: spinner 4s linear infinite;
 }
-
 @keyframes spinner {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
-
-
-.noSeEncuentra{
+.noSeEncuentra {
   align-self: center;
   margin-top: 20px;
-  font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 .buscador {
   display: flex;
   flex-direction: row;
-justify-content: center;
- 
+  justify-content: center;
   margin-top: 30px;
 }
 .active {
@@ -170,34 +163,24 @@ justify-content: center;
   display: flex;
   flex-direction: column;
   height: 110vh;
-  
 }
 .allEmpleos {
   width: 40vw !important;
   height: 70vh;
   overflow-y: scroll;
-
 }
-
 ::-webkit-scrollbar {
   width: 5px;
-  
   border-radius: 10px;
 }
-
-
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
-
-
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
 }
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
@@ -211,9 +194,7 @@ justify-content: center;
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-top: 10px;
   text-align: center;
- 
 }
-
 @media screen and (max-width: 768px) {
   .allEmpleos {
     display: flex;
@@ -231,5 +212,4 @@ justify-content: center;
     height: 120vh;
   }
 }
-
 </style>
