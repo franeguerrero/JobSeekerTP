@@ -22,8 +22,8 @@ export default {
   name: "SingleEmpleo",
   props: ["empleo"],
   methods: {
-    clickOnCard(array,id) {
-      this.$emit("laKey", array,id);
+    clickOnCard(array, id) {
+      this.$emit("laKey", array, id);
     },
   },
 };
@@ -44,7 +44,6 @@ export default {
   color: grey;
   font-size: 1rem;
 }
-
 .jornada,
 .sueldo,
 .remoto,
@@ -52,7 +51,6 @@ img,
 .jyr {
   display: inline;
 }
-
 .tittle {
   display: flex;
 }
@@ -62,7 +60,6 @@ img {
   height: 80px;
   background-color: #ececec;
 }
-
 .empleo {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -73,18 +70,16 @@ img {
   box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   padding: 1rem;
-  margin: 1.5rem  ;
+  margin: 1.5rem;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
 .tarjeta {
   display: flex;
   flex-direction: row;
 }
-
 .footer {
   display: flex;
   justify-content: space-between;
@@ -95,7 +90,6 @@ img {
 .titulo {
   margin-left: calc(40px + 0.390625vw);
 }
-
 p {
   font-size: calc(10px + 0.390625vw);
 }
