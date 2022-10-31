@@ -1,25 +1,42 @@
 <template>
   <div class="componente">
-    <h1>Candidatos</h1>
-    <button v-on:click="abrirModal()">Subi tu CV</button>
-    <div class="modal-background" @:click="abrirModal()"></div>
-    <div class="modal">
-      <h1>Cargue aqui su CV</h1>
+    <h1>Ultimos Candidatos</h1>
+    <div class="container-botones">
+      <button v-on:click="abrirModal()">Subi tu CV</button>
+      <div class="modal-background" @:click="abrirModal()"></div>
+      <div class="modal">
+        <h1>Arrastre aqui su CV</h1> <img src="@/assets/iconoCv.png" alt="">
+      </div>
+
+      <div class="buscadoryfiltros">
+        <div class="buscador">
+          <BuscadorCandidatos @soyKey="buscarCandidato" />
+        </div>
+
+        <div class="boton-filtros">
+          <input type="radio" name="full-time" @change="filtrofulltimea($event)" value="full-time" id="full-time" />
+          <label for="full-time"><span>full-time</span></label>
+          <input type="radio" name="full-time" @change="filtrofulltimea($event)" value="part-time" id="part-time" />
+          <label for="part-time"><span>part</span></label>
+          <input type="radio" name="full-time" @change="filtrofulltimea($event)" checked value="todo-time"
+            id="todo-time" />
+          <label for="todo-time"><span>todos</span></label>
+          <input type="radio" name="movilidad" @change="filtromovilidad1($event)" value="movilidad" id="movilidad" />
+          <label for="movilidad"><span>movilidad</span></label>
+          <input type="radio" name="movilidad" @change="filtromovilidad1($event)" value="sinmovilidad"
+            id="sinmovilidad" />
+          <label for="sinmovilidad"><span>sin movilidad</span></label>
+          <input type="radio" name="movilidad" @change="filtromovilidad1($event)" checked value="todos" id="todos" />
+          <label for="todos"><span>todos</span></label>
+        </div>
+      </div>
     </div>
     <div class="container">
       <div class="candidates-list">
-        <div
-          class="candidate-cards"
-          v-for="candidato in candidatos"
-          :key="candidato"
-        >
+        <div class="candidate-cards" v-for="candidato in candidatosFiltrados" :key="candidato">
           <div class="profile-card">
             <div class="image">
-              <img
-                v-bind:src="candidato.avatar"
-                alt=""
-                class="profile-img"
-              />
+              <img v-bind:src="candidato.avatar" alt="" class="profile-img" />
             </div>
 
             <div class="text-data">
@@ -33,11 +50,7 @@
                   <ul>
                     <li v-for="skill in candidato.skill" v-bind:key="skill">
                       <p>
-                        <img
-                          class="estrella"
-                          src="@/assets/estrella.png"
-                          alt=""
-                        />{{ skill }} <br />
+                        <img class="estrella" src="@/assets/estrella.png" alt="" />{{ skill }} <br />
                       </p>
                     </li>
                   </ul>
@@ -47,13 +60,11 @@
           </div>
           <div class="social">
             <button class="cv">
-              <img src="@/assets/cv.png" alt="" />
-              <a href=""></a>
+              <a href="https://www.linkedin.com">
+                <img src="@/assets/cv.png" alt="" /></a>
             </button>
             <button class="git">
-              <a href="https://www.github.com"
-                ><img src="@/assets/github.png" alt=""
-              /></a>
+              <a href="https://www.github.com"><img src="@/assets/github.png" alt="" /></a>
             </button>
           </div>
 
@@ -70,36 +81,133 @@
 </template>
 
 <script>
-
+import BuscadorCandidatos from "./BuscadorCandidatos.vue"
 export default {
-  name: "UltimosCandidatos",
+  name: "CardsCandidatos",
+  components: { BuscadorCandidatos },
   data: () => {
     return {
-      event: "click",
-      paginate: ["candidatos"],
-      candidatos: {},
-      methods: {
-        abrirModal() {
-          const { classList } = document.body;
-          if (classList.contains("open")) {
-            classList.remove("open");
-            classList.add("closed");
-          } else {
-            classList.remove("closed");
-            classList.add("open");
-          }
-          console.log("se esta inciando el modal");
-        },
-      },
+      candidatos: [],
+      candidatosFiltrados: [],
+      value1: "",
+      filtrofulltime: "todo-time",
+      filtromovilidad: "todos",
+
     };
   },
-  mounted(){
+
+  methods: {
+
+    buscarCandidato(value) {
+      this.value1 = value;
+      console.log(this.value1);
+      this.filtros()
+    },
+
+    filtros() {
+      if (this.filtrofulltime == "full-time" && this.filtromovilidad == "movilidad") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == true && candidato.movilidad == true)
+      } else if (this.filtromovilidad == "sinmovilidad" && this.filtrofulltime == "full-time") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == true && candidato.movilidad == false)
+      } else if (this.filtrofulltime == "part-time" && this.filtromovilidad == "movilidad") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == false && candidato.movilidad == true)
+      } else if (this.filtromovilidad == "sinmovilidad" && this.filtrofulltime == "part-time") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == false && candidato.movilidad == false)
+      } else if (this.filtrofulltime == "full-time" && this.filtromovilidad == "todos") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == true)
+      } else if (this.filtrofulltime == "part-time" && this.filtromovilidad == "todos") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.fulltime == false)
+      } else if (this.filtrofulltime == "todo-time" && this.filtromovilidad == "movilidad") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.movilidad == true)
+      } else if (this.filtrofulltime == "todo-time" && this.filtromovilidad == "sinmovilidad") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())) && candidato.movilidad == false)
+      } else if (this.filtrofulltime == "todo-time" && this.filtromovilidad == "todos") {
+        this.candidatosFiltrados = this.candidatos.filter((candidato) => (candidato.nombre.toLowerCase().startsWith(this.value1.toLowerCase()) ||
+          candidato.apellido.toLowerCase().startsWith(this.value1.toLowerCase())))
+      }
+    },
+
+    filtromovilidad1(event) {
+      this.filtromovilidad = event.target.value;
+      this.filtros();
+      console.log(this.filtromovilidad)
+    },
+
+
+    filtrofulltimea(event) {
+      this.filtrofulltime = event.target.value;
+      this.filtros();
+      console.log(this.filtrofulltime)
+    },
+
+    filtrarCandidatosMovilidad() {
+      this.candidatosFiltrados = this.candidatos.filter(
+        (candidato) => {
+          candidato.movilidad === true;
+        }
+      )
+
+    },
+
+    filtrarCandidatosSinMovilidad() {
+      this.candidatosFiltrados = this.candidatos.filter(
+        candidato => {
+          return candidato.movilidad === false;
+        }
+      )
+
+    },
+
+    filtrarCandidatosFullTime() {
+      this.candidatosFiltrados = this.candidatos.filter(
+        candidato => {
+          return candidato.fulltime === true;
+        }
+      )
+
+    },
+
+    filtrarCandidatosPartTime() {
+      this.candidatosFiltrados = this.candidatos.filter(
+        candidato => {
+          return candidato.fulltime === false;
+        }
+      )
+
+    },
+
+
+    abrirModal() {
+      const { classList } = document.body;
+      if (classList.contains("open")) {
+        classList.remove("open");
+        classList.add("closed");
+      } else {
+        classList.remove("closed");
+        classList.add("open");
+      }
+      console.log("se esta inciando el modal");
+    },
+  },
+  mounted() {
     fetch("https://635b06b3aa7c3f113db4c169.mockapi.io/candidatos")
       .then((response) => response.json())
-      .then((response) => (this.candidatos = response))
-      .catch((err) => console.error(err));        
+      .then((candidato) => {
+        this.candidatos = candidato
+        this.candidatosFiltrados = this.candidatos
+      })
   }
-};
+}
+
+
 </script>
 
 <style scoped>
@@ -107,14 +215,16 @@ export default {
   box-sizing: border-box;
   font-family: "Helvetica", sans-serif;
 }
+
 h1 {
   display: flex;
-  margin: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
+
 button {
   display: flex;
   float: inline-end;
-
   color: #fff;
   font-size: 14px;
   font-weight: 400;
@@ -127,13 +237,62 @@ button {
   transition: all 0.3s ease;
 }
 
+.buscadoryfiltros {
+  display: flex;
+  flex-direction: row;
+  justify-content:start;
+}
+.buscador{
+  width: 30%;
+  height: 100%;
+  padding: 10px;
+}
+.boton-filtros {
+  border: 1px solid #2e518b;
+  background-color: transparent;
+  padding: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: 'Helvetica', sans-serif;
+  border-radius: 50px;
+}
+
+
+.boton-filtros label {
+  border: 7px solid rgb(197, 195, 195);
+  border-radius: 50px;
+  font-size: smaller;
+  padding: 5px;
+
+}
+
+.boton-filtros input[type="radio"] {
+  display: none;
+
+}
+
+.boton-filtros input:checked+label:before {
+  display: none
+}
+
+.boton-filtros input:checked+label {
+  padding: 5px;
+  border-radius: 50px;
+  border: 7px solid rgb(255, 252, 252);
+  color: rgb(11, 126, 225);
+}
+
+
 @keyframes background-in {
   0% {
     scale: 0 0.005;
   }
+
   33% {
     scale: 1 0.005;
   }
+
   66%,
   100% {
     scale: 1 1;
@@ -141,20 +300,26 @@ button {
 }
 
 @keyframes modal-in {
+
   0%,
   66% {
     opacity: 0;
     visibility: hidden;
     translate: -50% -30%;
   }
+
   100% {
     opacity: 1;
     visibility: visible;
   }
 }
 
+.boton-filtros {
+  display: flex;
+}
+
 .modal-background {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   transform: scale(1, 1);
@@ -166,6 +331,7 @@ button {
   opacity: 0;
   visibility: hidden;
   transition: 0.5s;
+  z-index: 1000;
 }
 
 body.open .modal-background {
@@ -175,7 +341,7 @@ body.open .modal-background {
 }
 
 .modal {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
@@ -187,6 +353,10 @@ body.open .modal-background {
   opacity: 0;
   visibility: hidden;
   transition: 0.5s;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 body.open .modal {
@@ -200,6 +370,7 @@ body.closed .modal {
   visibility: hidden;
   translate: -50% -50%;
 }
+
 .container-skills {
   overflow: hidden;
   margin-top: 20px;
@@ -210,6 +381,11 @@ body.closed .modal {
   box-shadow: 2px 2px 8px 4px #d3d3d3d1;
   color: rgb(12, 12, 12);
 }
+
+.container-skills::-webkit-scrollbar {
+  display: none;
+}
+
 .condicionales {
   font-size: small;
   position: relative;
@@ -218,9 +394,21 @@ body.closed .modal {
   display: flex;
   justify-content: space-around;
 }
-.candidates-cards {
-  height: 100px;
+
+.candidate-cards {
+  margin: 20px;
+  height: 500px;
   width: 250px;
+}
+
+
+.candidate-cards:hover {
+  transform: translateY(-30px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 .estrella {
@@ -228,6 +416,7 @@ body.closed .modal {
   width: 10px;
   margin-right: 5px;
 }
+
 .tituloS {
   font-weight: bold;
   margin: 10px;
@@ -240,14 +429,15 @@ body.closed .modal {
   margin: 10px;
   flex-direction: column;
 }
+
 .lista-habilidades ul li {
   margin: 5px;
 }
 
 .social {
   position: relative;
-  bottom: 500px;
-  left: 70px;
+  bottom: 510px;
+  left: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -291,6 +481,7 @@ body.closed .modal {
   padding: 3px;
   margin-bottom: 10px;
 }
+
 .image .profile-img {
   display: flex;
   height: 100%;
@@ -299,24 +490,28 @@ body.closed .modal {
   border-radius: 50%;
   border: 3px solid #fff;
 }
+
 .profile-card .text-data {
   display: flex;
   flex-direction: column;
 
   color: #333;
 }
+
 .text-data {
   display: flex;
   justify-content: center;
 
   text-align: justify;
 }
+
 .text-data .name {
   align-items: center;
   font-size: 22px;
   font-weight: 500;
   margin: 10px;
 }
+
 .text-data .edad {
   margin-left: 10px;
   align-items: initial;
@@ -329,6 +524,7 @@ body.closed .modal {
   align-items: center;
   margin-top: 25px;
 }
+
 .buttons .button {
   color: #fff;
   font-size: 14px;
@@ -341,7 +537,8 @@ body.closed .modal {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.buttons .button:hover {
+
+.button:hover {
   background-color: #0e4bf1;
 }
 

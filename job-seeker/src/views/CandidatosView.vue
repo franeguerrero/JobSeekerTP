@@ -1,17 +1,14 @@
 <template>
   <div class="algo">
-    <FormularioEmpleos/>
     <CardsCandidatos/>
   </div>
 </template>
 
 <script>
-  import FormularioEmpleos from "../components/FormularioEmpleos.vue";
   import CardsCandidatos from "../components/CardsCandidatos.vue";
   export default {
     name: "CandidatosView",
     components: {
-      FormularioEmpleos,
       CardsCandidatos,
     },
   };
