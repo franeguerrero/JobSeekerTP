@@ -1,7 +1,7 @@
 <template>
   <div class="componente">
     <div class="titulo">
-      <input v-model = "value"  @input= "filterResults(value)" placeholder="Buscar por nombre o apellido" type = "text" input>
+      <input v-model = "value"  @input= "filterResults(value)" placeholder="Buscar por nombre o apellido.." type = "text" input>
   </div>
     </div>
 </template>
@@ -37,7 +37,8 @@ h1 {
   margin: 20px;
 }
 input {
-    
+    width: 300px;
+    height: 50px;
     color: rgb(0, 0, 0);
     font-family: 'Helvetica', sans-serif;
     border: 5px solid #c9cacb;;
