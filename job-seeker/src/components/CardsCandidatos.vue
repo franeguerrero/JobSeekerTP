@@ -1,6 +1,6 @@
 <template>
   <div class="componente">
-    <h1>Ultimos Candidatos</h1>
+    <h1>Candidatos</h1>
     <div class="container-botones">
       <button v-on:click="abrirModal()">Subi tu CV</button>
       <div class="modal-background" @:click="abrirModal()"></div>
@@ -9,9 +9,9 @@
       </div>
 
       <div class="buscadoryfiltros">
-        <div class="buscador">
-          <BuscadorCandidatos @soyKey="buscarCandidato" />
-        </div>
+
+        <BuscadorCandidatos class="buscador" @soyKey="buscarCandidato" />
+
 
         <div class="boton-filtros">
           <input type="radio" name="full-time" @change="filtrofulltimea($event)" value="full-time" id="full-time" />
@@ -240,17 +240,19 @@ button {
 .buscadoryfiltros {
   display: flex;
   flex-direction: row;
-  justify-content:start;
+  justify-content: start;
 }
-.buscador{
-  width: 30%;
-  height: 100%;
+
+.buscador {
   padding: 10px;
 }
+
 .boton-filtros {
-  border: 1px solid #2e518b;
+  height: 50px;
+  margin-top: 10px;
+  border: 1px solid transparent;
   background-color: transparent;
-  padding: 10px;
+  padding: 5px;
   color: #ffffff;
   text-decoration: none;
   text-transform: uppercase;
